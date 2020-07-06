@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using TasalHousing.Data.DatabaseContexts.ApplicationDbContext;
+using Microsoft.EntityFrameworkCore.SqlServer.Internal;
 
 namespace TasalHousing.web
 {
@@ -26,8 +28,24 @@ namespace TasalHousing.web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddDbContextPool<ApplicationDbContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("ApplicationConection"),
+
+               sqlserveroptions =>{
+                  sqlServerOptions.MigrationAssembly("TasalHousing.Data");
+                }
+            ));
+
             services.AddDbContextPool<AuthenticationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AuthenticationConnection")));
+               options.UseSqlServer(Configuration.GetConnectionString("AuthenticationConnection"),
+
+               sqlServerOptions => {
+                   sqlServerOptions.MigrationAssembly("TasalHousing.Data");
+
+               }
+               
+            ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
