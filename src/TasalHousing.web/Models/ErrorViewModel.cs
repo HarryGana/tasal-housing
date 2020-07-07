@@ -1,6 +1,6 @@
 using System;
 
-namespace TasalHousing.web.Models
+namespace TasalHousing.Web.Models
 {
     public class ErrorViewModel
     {

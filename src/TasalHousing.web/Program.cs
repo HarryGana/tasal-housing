@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace TasalHousing.web
+namespace TasalHousing.Web
 {
     public class Program
     {

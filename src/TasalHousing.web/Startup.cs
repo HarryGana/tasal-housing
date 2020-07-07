@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using TasalHousing.Data.DatabaseContexts.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore.SqlServer.Internal;
 
-namespace TasalHousing.web
+namespace TasalHousing.Web
 {
     public class Startup
     {
@@ -30,20 +30,20 @@ namespace TasalHousing.web
             services.AddControllersWithViews();
 
             services.AddDbContextPool<ApplicationDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("ApplicationConection"),
+               options.UseSqlServer(Configuration.GetConnectionString("ApplicationConnection"),
 
-               sqlserveroptions =>{
+               sqlServerOptions => {
                   sqlServerOptions.MigrationAssembly("TasalHousing.Data");
                 }
             ));
 
             services.AddDbContextPool<AuthenticationDbContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("AuthenticationConnection"),
+                 options.UseSqlServer(Configuration.GetConnectionString("AuthenticationConnection"),
 
-               sqlServerOptions => {
+                 sqlServerOptions => {
                    sqlServerOptions.MigrationAssembly("TasalHousing.Data");
 
-               }
+                 }
                
             ));
         }
