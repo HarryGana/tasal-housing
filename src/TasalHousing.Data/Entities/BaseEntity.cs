@@ -10,7 +10,7 @@ namespace TasalHousing.Data.Entities
 
         public bool IsDeleted { get; set; }
 
-        public DateTime CreatedAt { get; set: }
+        public DateTime CreatedAt { get; set; }
 
         public DateTime Modified { get; set; }
 
