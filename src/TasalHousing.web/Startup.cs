@@ -11,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Identity.UserManager;
+using TasalHousing.Data.Entities;
+//using TasalHousing.Data.Entities.ApplicationUser;
 
 
 namespace TasalHousing.Web
@@ -36,6 +40,21 @@ namespace TasalHousing.Web
                   sqlServerOptions.MigrationsAssembly("TasalHousing.Data");
                 }
             ));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<AuthenticationDbContext>()
+            .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.SignIn.RequireConfirmedEmail = false;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+            });
             // services.AddDbContextPool<ApplicationDbContext>(options => options.)
 
             services.AddDbContextPool<AuthenticationDbContext>(options =>
@@ -75,6 +94,7 @@ namespace TasalHousing.Web
             });
 
             MigrateDatabaseContext(iservice);
+            CreateDefaultRolesAndUsers(iservice).GetAwaiter().GetResult();
 
         }
 //This one is to make sure any migration you do after hosting the application on cloud would automatically migrate..he wil show you this in the next video i thnk
@@ -86,5 +106,42 @@ namespace TasalHousing.Web
             var applicationdbcontext = iservice.GetRequiredService<ApplicationDbContext>();
             applicationdbcontext.Database.Migrate();
         }
+        
+        public async Task CreateDefaultRolesAndUsers(IServiceProvider iservice)
+        {
+            string[] roles = new string[] {"SystemAdminstrator", "Agent", "User"};
+            var userEmail = "admin@tasalhousing.com";
+            var userPassword = "TassallahGana@2020";
+
+            var roleManager = iservice.GetRequiredService<RoleManager<IdentityRole>>();
+            foreach (var role in roles)
+            {
+                var roleExists = await roleManager.RoleExistsAsync(role);
+                if (!roleExists)
+                {
+                    await roleManager.CreateAsync(new IdentityRole{ Name = role});
+                }
+            }
+
+            var userManager = iservice.GetRequiredService<UserManager<ApplicationUser>>();
+            var user = await userManager.FindByEmailAsync(userEmail);
+            if (user is null)
+            {
+                user = new ApplicationUser
+                {
+                    Email = userEmail,
+                    UserName = userEmail,
+                    EmailConfirmed = true,
+                    PhoneNumber = "+2348032158734",
+                    PhoneNumberConfirmed = true,
+                };
+
+                await userManager.CreateAsync(user, userPassword);
+                await userManager.AddToRolesAsync(user, roles);
+            }
+
+        
+        }
+
     }
 }
