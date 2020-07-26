@@ -18,6 +18,7 @@ using TasalHousing.Data.Entities;
 
 
 namespace TasalHousing.Web
+
 {
     public class Startup
     {
