@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 //using Microsoft.AspNetCore.Identity.UserManager;
 using TasalHousing.Data.Entities;
+using TasalHousing.web.Interfaces;
+using TasalHousing.web.Services;
 //using TasalHousing.Data.Entities.ApplicationUser;
 
 
@@ -33,6 +35,7 @@ namespace TasalHousing.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IAccountsService, AccountsService>();
 
             services.AddDbContextPool<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("ApplicationConnection"),
@@ -85,8 +88,9 @@ namespace TasalHousing.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
