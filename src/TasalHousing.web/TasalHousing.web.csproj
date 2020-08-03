@@ -6,6 +6,11 @@
   </PropertyGroup>
 
 
+<ItemGroup>
+  <None Remove="Interfaces\NewFile.txt" />
+</ItemGroup>
+
+
   <ItemGroup>
     <ProjectReference Include="..\TasalHousing.Data\TasalHousing.Data.csproj" />
   </ItemGroup>

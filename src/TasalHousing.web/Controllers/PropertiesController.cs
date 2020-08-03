@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System;
+using TasalHousing.web.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace TasalHousing.web.Controllers
         {
             return View();
         }
+
+        [HttpPost]
 
         public IActionResult Add(PropertyModel model)
         {
