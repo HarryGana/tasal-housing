@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TasalHousing.web.Controllers
 {
+    [Authorize]
     public class PropertiesController : Controller
     {
         private readonly IPropertyService _propertyService;
@@ -18,7 +19,7 @@ namespace TasalHousing.web.Controllers
             _propertyService = propertyService;
         }
             
-
+        [AllowAnonymous]
         [HttpGet]
 
         public IActionResult Index()
@@ -27,7 +28,7 @@ namespace TasalHousing.web.Controllers
             return View(properties);
         }
         
-        [Authorize]
+        
         [HttpGet]
 
         public IActionResult Add()
@@ -35,7 +36,7 @@ namespace TasalHousing.web.Controllers
             return View();
         }
 
-        [Authorize]
+        
         [HttpPost]
 
         public async Task<IActionResult> Add(PropertyModel model)
