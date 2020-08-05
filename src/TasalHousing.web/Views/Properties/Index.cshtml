@@ -1,1 +1,17 @@
-﻿<h1>Properties Page</h1>
+﻿@model IEnumerable<TasalHousing.Data.Entities.Property>
+
+<h1>Properties Page</h1>
+
+@if (Model is object)
+{
+    @foreach (var property in Model)
+    {
+        <h3>@property.Title</h3>
+        <hr />
+        <p>@property.Price</p>
+        <p>@property.Address</p>
+        <p>@property.ContactPhoneNumber</p>
+
+
+    }
+}

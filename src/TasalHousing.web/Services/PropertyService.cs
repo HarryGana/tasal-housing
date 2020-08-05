@@ -18,6 +18,12 @@ namespace TasalHousing.web.Services
             _dbContext = dbContext;
         }
 
+        public IEnumerable<Property> GetAllProperties()
+        {
+            return _dbContext.Properties;
+            // we need to return a list of properties
+        }
+
         public async Task AddProperty(PropertyModel model)
         {
             var property = new Property

@@ -22,7 +22,8 @@ namespace TasalHousing.web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var properties = _propertyService.GetAllProperties();
+            return View(properties);
         }
 
         [HttpGet]
