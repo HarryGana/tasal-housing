@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TasalHousing.web.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TasalHousing.web.Controllers
 {
@@ -25,7 +26,8 @@ namespace TasalHousing.web.Controllers
             var properties = _propertyService.GetAllProperties();
             return View(properties);
         }
-
+        
+        [Authorize]
         [HttpGet]
 
         public IActionResult Add()
@@ -33,7 +35,8 @@ namespace TasalHousing.web.Controllers
             return View();
         }
 
-        //[HttpPost]
+        [Authorize]
+        [HttpPost]
 
         public async Task<IActionResult> Add(PropertyModel model)
         {
