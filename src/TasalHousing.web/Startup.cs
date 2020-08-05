@@ -36,6 +36,7 @@ namespace TasalHousing.Web
         {
             services.AddControllersWithViews();
             services.AddTransient<IAccountsService, AccountsService>();
+            services.AddTransient<IPropertyService, PropertyService>();
 
             services.AddDbContextPool<ApplicationDbContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("ApplicationConnection"),
