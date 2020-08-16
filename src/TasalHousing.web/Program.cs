@@ -21,6 +21,8 @@ namespace TasalHousing.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("https://*:80", "http://*:443");
+                    webBuilder.UseKestrel();
                 });
     }
 }

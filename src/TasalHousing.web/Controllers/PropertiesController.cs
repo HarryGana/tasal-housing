@@ -48,6 +48,7 @@ namespace TasalHousing.web.Controllers
             }
             catch(Exception e)
             {
+                ModelState.AddModelError(e.Message, null);
                 return RedirectToAction(nameof(Index));
             }
         }
